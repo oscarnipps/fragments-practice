@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.USER_DATA_KEY,"user name details : john obi");
         fragmentTransaction.add(R.id.fragment_container_view ,FragmentA.class,bundle);
+        fragmentTransaction.commit();
 
     }
 
