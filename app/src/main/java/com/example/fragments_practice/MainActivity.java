@@ -3,6 +3,7 @@ package com.example.fragments_practice;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,20 +15,32 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private ActivityMainBinding mBinding;
 
+    public MainActivity() {
+        super(R.layout.activity_main);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "activity onCreate");
+        if (savedInstanceState == null) {
+            Log.d(TAG, "activity onCreate");
 
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+            mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.USER_DATA_KEY,"user name details : john obi");
-        fragmentTransaction.add(R.id.fragment_container_view ,FragmentA.class,bundle);
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.USER_DATA_KEY,"user name details : john obi");
+            fragmentTransaction.add(R.id.fragment_container_view , BookListFragment.class,bundle);
+            fragmentTransaction.commit();
+        }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "activity onSaveInstanceState");
     }
 
     @Override
