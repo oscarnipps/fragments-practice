@@ -1,6 +1,9 @@
 package com.example.fragments_practice;
 
-public class Book {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Book implements Parcelable {
 
     private String title;
     private String summary;
@@ -17,6 +20,27 @@ public class Book {
         this.rating = rating;
         this.isFavourite = isFavourite;
     }
+
+    protected Book(Parcel in) {
+        title = in.readString();
+        summary = in.readString();
+        author = in.readString();
+        publishedDate = in.readString();
+        rating = in.readDouble();
+        isFavourite = in.readByte() != 0;
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -64,5 +88,20 @@ public class Book {
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(summary);
+        parcel.writeString(author);
+        parcel.writeString(publishedDate);
+        parcel.writeDouble(rating);
+        parcel.writeByte((byte) (isFavourite ? 1 : 0));
     }
 }

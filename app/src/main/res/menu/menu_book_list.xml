@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--shows menu items with icons-->
+<!--    <item
+        android:icon="@drawable/ic_more"
+        android:title=""
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/delete"
+                android:icon="@drawable/ic_delete"
+                android:title="delete all"
+                />
+
+            <item
+                android:id="@+id/sync"
+                android:icon="@drawable/ic_sync"
+                android:title="sync items"
+                />
+        </menu>
+    </item>-->
+
+
+    <item
+        app:showAsAction="always"
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete"
+        android:title="delete all"
+        />
+
+    <item
+        app:showAsAction="always"
+        android:id="@+id/sync"
+        android:icon="@drawable/ic_sync"
+        android:title="sync items"
+        />
+
+
+</menu>
