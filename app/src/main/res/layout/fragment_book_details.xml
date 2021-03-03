@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.example.fragments_practice.Book" />
+
+        <variable
+            name="util"
+            type="com.example.fragments_practice.Util" />
+
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:background="#5E1717"
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/coordinator_layout">
@@ -13,19 +26,126 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
+                app:navigationIcon="@drawable/ic_back"
                 app:titleTextColor="#ffffff"
-                app:title="Book Details"
                 android:id="@+id/book_details_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ScrollView
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recyclerview"/>
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/book_cover"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="32dp"
+                        android:src="@drawable/ic_menu_book"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:text="@{model.title}"
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/raleway_medium"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.071"
+                        app:layout_constraintStart_toEndOf="@+id/book_cover"
+                        app:layout_constraintTop_toTopOf="@+id/book_cover"
+                        tools:text="The lords samurai" />
+
+                    <TextView
+                        android:text="@{model.author}"
+                        android:id="@+id/author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/raleway_medium"
+                        android:textAllCaps="true"
+                        android:textColor="#A3A1A1"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.04"
+                        app:layout_constraintStart_toEndOf="@+id/book_cover"
+                        app:layout_constraintTop_toBottomOf="@+id/title"
+                        tools:text="David Burke" />
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/rating_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="8dp"
+                        tools:rating="2.5"
+                        android:rating="@{model.rating}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/book_cover"
+                        app:layout_constraintTop_toBottomOf="@+id/author"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_margin="16dp"
+                    android:background="#A19F9F"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:layout_margin="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:text="@string/summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="#B1AFAF"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/raleway_medium"
+                    android:lineSpacingExtra="4dp"
+                    tools:text="The lords samurai engage in a legacy war which leads all clans to consume and destroy themselves in a horrific war"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/summary"/>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

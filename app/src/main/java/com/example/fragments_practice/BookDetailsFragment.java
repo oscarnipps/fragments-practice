@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -65,6 +66,8 @@ public class BookDetailsFragment extends Fragment {
         super.onResume();
         Log.d(TAG, "book item in onResume is : " + mBook);
         Log.d(TAG, "fragment BooKDetails onResume called");
+        AppCompatRatingBar ratingBar = mBinding.ratingBar;
+        ratingBar.setRating(mBook == null ? 0 : mBook.getRating());
     }
 
     @Override

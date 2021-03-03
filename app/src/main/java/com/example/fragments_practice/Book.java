@@ -9,10 +9,10 @@ public class Book implements Parcelable {
     private String summary;
     private String author;
     private String publishedDate;
-    private double rating;
+    private float rating;
     private boolean isFavourite;
 
-    public Book(String title, String summary, String author, String publishedDate, double rating, boolean isFavourite) {
+    public Book(String title, String summary, String author, String publishedDate, float rating, boolean isFavourite) {
         this.title = title;
         this.summary = summary;
         this.author = author;
@@ -26,7 +26,7 @@ public class Book implements Parcelable {
         summary = in.readString();
         author = in.readString();
         publishedDate = in.readString();
-        rating = in.readDouble();
+        rating = in.readFloat();
         isFavourite = in.readByte() != 0;
     }
 
@@ -74,11 +74,11 @@ public class Book implements Parcelable {
         this.publishedDate = publishedDate;
     }
 
-    public double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -101,7 +101,7 @@ public class Book implements Parcelable {
         parcel.writeString(summary);
         parcel.writeString(author);
         parcel.writeString(publishedDate);
-        parcel.writeDouble(rating);
+        parcel.writeFloat(rating);
         parcel.writeByte((byte) (isFavourite ? 1 : 0));
     }
 }
