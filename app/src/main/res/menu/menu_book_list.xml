@@ -3,39 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--shows menu items with icons-->
-<!--    <item
+   <!-- <item
+        android:id="@+id/item_container"
         android:icon="@drawable/ic_more"
         android:title=""
         app:showAsAction="always">
 
         <menu>
             <item
+                android:contentDescription="@string/delete_all_items"
                 android:id="@+id/delete"
                 android:icon="@drawable/ic_delete"
-                android:title="delete all"
+                android:title="@string/delete_all"
                 />
 
             <item
+                android:contentDescription="@string/sync_all_items"
                 android:id="@+id/sync"
                 android:icon="@drawable/ic_sync"
-                android:title="sync items"
+                android:title="@string/sync_items"
                 />
         </menu>
     </item>-->
 
 
     <item
-        app:showAsAction="always"
+        android:contentDescription="@string/delete_all_items"
+        app:showAsAction="ifRoom"
         android:id="@+id/delete"
         android:icon="@drawable/ic_delete"
-        android:title="delete all"
+        android:title="@string/delete_all"
         />
 
     <item
-        app:showAsAction="always"
+        android:contentDescription="@string/sync_all_items"
+        app:showAsAction="ifRoom"
         android:id="@+id/sync"
         android:icon="@drawable/ic_sync"
-        android:title="sync items"
+        android:title="@string/sync_all_items"
         />
 
 

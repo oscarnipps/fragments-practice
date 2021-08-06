@@ -42,8 +42,8 @@ public class BookDetailsFragment extends Fragment {
         Log.d(TAG, "fragment BooKDetails onCreate called");
 
         //the result call back is called when the fragment is in the STARTED state ( onResume is called )
-        getParentFragmentManager().setFragmentResultListener(Const.BOOK_DETAILS_RESULT_KEY, this, (requestKey, result) -> {
-            mBook = result.getParcelable(Const.BOOK_ITEM_PARCELABLE_KEY);
+        getParentFragmentManager().setFragmentResultListener(Constants.BOOK_DETAILS_RESULT_KEY, this, (requestKey, result) -> {
+            mBook = result.getParcelable(Constants.BOOK_ITEM_PARCELABLE_KEY);
             Log.d(TAG, "book item retrieved with value : " + mBook);
         });
     }
@@ -64,8 +64,8 @@ public class BookDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "book item in onResume is : " + mBook);
         Log.d(TAG, "fragment BooKDetails onResume called");
+        mBinding.setModel(mBook);
         AppCompatRatingBar ratingBar = mBinding.ratingBar;
         ratingBar.setRating(mBook == null ? 0 : mBook.getRating());
     }

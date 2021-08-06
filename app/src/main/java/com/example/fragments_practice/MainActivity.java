@@ -38,10 +38,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, "normal device fragment setup");
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.USER_DATA_KEY,"user name details : john obi");
-        fragmentTransaction.add(R.id.fragment_container_view , BookListFragment.class,bundle);
+        bundle.putBoolean(Constants.ARG_PREMIUM_USER_KEY,getResources().getBoolean(R.bool.non_premium_user));
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        getSupportFragmentManager().setFragmentResult(Constants.BOOK_LIST_RESULT_KEY,bundle);
+
+        BookListFragment bookListFragment = BookListFragment.getInstance();
+
+        //boolean valuePremium = bookListFragment.mIsPremiumUser;
+
+        bookListFragment.setArguments(bundle);
+
+        fragmentTransaction.add(R.id.fragment_container_view , bookListFragment);
         fragmentTransaction.commit();
     }
 

@@ -20,11 +20,28 @@
 
          </com.google.android.material.appbar.AppBarLayout>
 
-         <androidx.recyclerview.widget.RecyclerView
+         <LinearLayout
              app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:id="@+id/recyclerview"/>
+             android:orientation="vertical">
+
+             <androidx.recyclerview.widget.RecyclerView
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:id="@+id/recyclerview"/>
+
+             <TextView
+                 android:id="@+id/premium_info"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:text="subscribe for premium to use the extra features"
+                 android:fontFamily="@font/raleway_medium"
+                 android:gravity="center"/>
+
+         </LinearLayout>
+
+
 
      </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

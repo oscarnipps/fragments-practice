@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">fragments-practice</string>
     <string name="summary">Summary</string>
+    <string name="got_it">got it</string>
+    <string name="premium_request_dialog_message">This feature is not available for free users , subscribe for a premium account to start using this feature.</string>
+    <string name="premium_request_dialog_title">premium subscription</string>
+    <string name="delete_all">delete all</string>
+    <string name="sync_items">sync items</string>
+    <string name="delete_all_items">delete all items</string>
+    <string name="sync_all_items">sync all items</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fragments_practice.databinding.FragmentBookListBinding;
+import com.example.fragments_practice.databinding.PremiumRequestDialogBinding;
 
 import java.util.List;
 
@@ -28,6 +30,35 @@ public class BookListFragment extends Fragment implements BookListAdapter.BookLi
     private RecyclerView mRecyclerView;
     private BookListAdapter mAdapter;
 
+    @VisibleForTesting
+    boolean mIsPremiumUser;
+
+
+    //required empty constructor
+    public BookListFragment() {
+    }
+
+    public static BookListFragment getInstance() {
+        return new BookListFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
+
+        setHasOptionsMenu(true);
+
+        getParentFragmentManager().setFragmentResultListener(Constants.BOOK_LIST_RESULT_KEY, this, (requestKey, result) -> {
+            mIsPremiumUser = result.getBoolean(Constants.ARG_PREMIUM_USER_KEY);
+
+            Log.d(TAG, "is a premium user : " + mIsPremiumUser);
+
+            if (!mIsPremiumUser) {
+                mBinding.recyclerview.setVisibility(View.GONE);
+            }
+        });
+
+    }
 
     @Nullable
     @Override
@@ -40,13 +71,13 @@ public class BookListFragment extends Fragment implements BookListAdapter.BookLi
 
         mBinding.bookListToolbar.inflateMenu(R.menu.menu_book_list);
 
-        mBinding.bookListToolbar.setOverflowIcon(ResourcesCompat.getDrawable(getResources(),R.drawable.ic_delete,null));
+        //setOverFlowMenuIcon();
 
         mBinding.bookListToolbar.setOnMenuItemClickListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.delete:
-                    Toast.makeText(requireContext(), "delete items", Toast.LENGTH_SHORT).show();
+                    deleteUser();
                     return true;
 
                 case R.id.sync:
@@ -59,9 +90,20 @@ public class BookListFragment extends Fragment implements BookListAdapter.BookLi
 
         });
 
-
-
         return mBinding.getRoot();
+    }
+
+    private void setOverFlowMenuIcon() {
+        mBinding.bookListToolbar.setOverflowIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_delete, null));
+    }
+
+    private void deleteUser() {
+        if (!mIsPremiumUser) {
+            showPremiumUserRequestDialog();
+            return;
+        }
+
+        Toast.makeText(requireContext(), "deleting items", Toast.LENGTH_SHORT).show();
     }
 
     private void initializeRecyclerView() {
@@ -71,17 +113,11 @@ public class BookListFragment extends Fragment implements BookListAdapter.BookLi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        Log.d(TAG, "fragment BookList onCreate called");
-    }
-
 
     @Override
     public void onStart() {
         super.onStart();
+
         Log.d(TAG, "fragment BookList onStart called");
     }
 
@@ -106,18 +142,19 @@ public class BookListFragment extends Fragment implements BookListAdapter.BookLi
     @Override
     public void onResume() {
         super.onResume();
+
         Log.d(TAG, "fragment BookList onResume called");
     }
 
     @Override
     public void onBookItemClicked(Book book, int position) {
-        Toast.makeText(requireContext(), book.getTitle() , Toast.LENGTH_SHORT).show();
-        FragmentTransaction fragmentTransaction =  getParentFragmentManager().beginTransaction();
+        Toast.makeText(requireContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_view, new BookDetailsFragment());
         fragmentTransaction.setReorderingAllowed(true);
         Bundle result = new Bundle();
-        result.putParcelable(Const.BOOK_ITEM_PARCELABLE_KEY,book);
-        getParentFragmentManager().setFragmentResult(Const.BOOK_DETAILS_RESULT_KEY,result);
+        result.putParcelable(Constants.BOOK_ITEM_PARCELABLE_KEY, book);
+        getParentFragmentManager().setFragmentResult(Constants.BOOK_DETAILS_RESULT_KEY, result);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -127,5 +164,23 @@ public class BookListFragment extends Fragment implements BookListAdapter.BookLi
         Toast.makeText(requireContext(), book.getTitle() + " added to favourites", Toast.LENGTH_SHORT).show();
         book.setFavourite(book.isFavourite() ? false : true);
         mAdapter.updateFavoriteItem(position);
+    }
+
+    private void showPremiumUserRequestDialog() {
+        PremiumRequestDialogBinding dialogBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(requireContext()),
+                R.layout.premium_request_dialog,
+                null,
+                false
+        );
+
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setView(dialogBinding.getRoot())
+                .setCancelable(true)
+                .create();
+
+        dialog.show();
+
+        dialogBinding.okay.setOnClickListener(v -> dialog.dismiss());
     }
 }
